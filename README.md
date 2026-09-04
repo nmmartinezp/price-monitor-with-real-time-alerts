@@ -20,4 +20,4 @@ Solution:
 ### Main Worflow
 
 <div style="width: 100%;" align="center">
-<image src="docs/mainflow.png" style="width: 50%;"/></div>
+<image src="docs/mainflow.png" style="width: 100%;"/></div>
