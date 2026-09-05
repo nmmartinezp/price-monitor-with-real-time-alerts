@@ -1,0 +1,21 @@
+services:
+  nginx:
+    volumes:
+      - ./infra/nginx/nginx.dev.conf:/etc/nginx/nginx.conf:ro
+
+  frontend:
+    command: npm run dev
+    environment:
+      - WATCHPACK_POLLING=true # Para hot-reload en WSL/Windows
+
+  backend-express:
+    command: npm run dev
+    environment:
+      - NODE_ENV=development
+      - LOG_LEVEL=debug
+
+  backend-go:
+    command: air -c .air.toml # Hot-reload para Go
+    environment:
+      - GO_ENV=development
+      - LOG_LEVEL=debug

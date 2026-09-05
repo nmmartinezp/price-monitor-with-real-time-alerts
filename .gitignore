@@ -1,0 +1,49 @@
+# Dependencias
+node_modules/
+vendor/
+*.log
+
+# Archivos de entorno
+.env
+.env.local
+.env.*.local
+*.env
+
+# Docker
+volumes/
+*.pid
+
+# IDs
+*.pid
+*.seed
+
+# Directorios de compilación
+node_modules/.cache/
+dist/
+build/
+.out/
+.next/
+.npm/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing
+coverage/
+.nyc_output/
+
+# Configuraciones locales
+*.local
+!.env.example
+
+# SSL
+*.crt
+*.key
+*.pem
