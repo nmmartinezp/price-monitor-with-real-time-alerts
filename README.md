@@ -21,3 +21,10 @@ Solution:
 
 <div style="width: 100%;" align="center">
 <image src="docs/mainflow.png" style="width: 100%;"/></div>
+
+### Model Database for Postgres
+
+View on the DrawSQL page, click [here](https://drawsql.app/teams/nisse-maximiliano/diagrams/db-scraper-reg).
+
+<div style="width: 100%;" align="center">
+<image src="docs/db_registry.jpg" style="width: 100%;"/></div>
