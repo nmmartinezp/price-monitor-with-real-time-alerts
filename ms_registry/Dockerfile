@@ -1,14 +1,8 @@
-FROM node:20-alpine
-
+FROM node:24-alpine
 WORKDIR /app
-
-# Instalar dependencias
-COPY package*.json ./
-RUN npm ci
-
-# Copiar el resto del código
+RUN corepack enable
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 COPY . .
-
-EXPOSE 3001
-
-CMD ["npm", "dev"]
+EXPOSE 3002
+CMD ["pnpm", "dev"]

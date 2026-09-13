@@ -577,7 +577,7 @@ INSERT INTO users (
 ) VALUES (
     '11111111-1111-1111-1111-111111111111',
     'demo@example.com',
-    '$2a$10$N9qo8uLOickgx2ZMRZoMy.Mr/.Zq2Nn7n7XsM3F/f5DnIYkR3qH2W', -- password: Demo123!
+    '1234', -- password: Demo123!
     'Demo User',
     'PRO',
     10,

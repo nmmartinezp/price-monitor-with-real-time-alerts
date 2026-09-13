@@ -7,11 +7,12 @@ services:
       - "3000:80"
       - "4000:443"
     volumes:
-      - ./infrastructure/nginx/nginx.dev.conf:/etc/nginx/nginx.conf:ro
-      - ./infrastructure/nginx/ssl:/etc/nginx/ssl:ro # Para HTTPS en producción
+      - ./infra/nginx/nginx.dev.conf:/etc/nginx/nginx.conf:ro
+      #- ./infrastructure/nginx/ssl:/etc/nginx/ssl:ro # Para HTTPS en producción
     depends_on:
       #- user_app
-      - ms_registry
+      ms_registry:
+        condition: service_healthy
       #- ms_scraper
     networks:
       - price-monitor-network
@@ -43,23 +44,22 @@ services:
       context: ./ms_registry
       dockerfile: Dockerfile.dev
     container_name: price-monitor-registry
-    ports:
-      - "3002:3000"
     volumes:
       - ./ms_registry:/app
+      - /app/node_modules
     environment:
       - NODE_ENV=development
       - PORT=3002
       - DATABASE_URL=postgresql://user1:1234@postgres:5432/price_monitor
       # - REDIS_URL=redis://redis:6379
       # - RABBITMQ_URL=amqp://guest:guest@rabbitmq:5672
-    depends_on:
-      postgres:
-        condition: service_healthy
-      # redis:
-      #   condition: service_healthy
-      # rabbitmq:
-      #   condition: service_healthy
+    #depends_on:
+    # postgres:
+    #   condition: service_healthy
+    # redis:
+    #   condition: service_healthy
+    # rabbitmq:
+    #   condition: service_healthy
     networks:
       - price-monitor-network
     restart: unless-stopped
@@ -192,7 +192,7 @@ networks:
     driver: bridge
     name: price-monitor-network
 
-volumes:
-  postgres_data:
-  # redis_data:
-  # rabbitmq_data:
+# volumes:
+# postgres_data:
+# redis_data:
+# rabbitmq_data:

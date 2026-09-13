@@ -8,7 +8,9 @@ app.use(express.json());
 app.use("/api/v1/users", usersRoutes);
 
 app.get("/health", (req: Request, res: Response) => {
-  res.send("Hello NIKI!");
+  res.status(200).json({
+    status: "ok",
+  });
 });
 
 export default app;
