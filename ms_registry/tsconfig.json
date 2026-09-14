@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "nodenext",
     "rewriteRelativeImportExtensions": true,
     "erasableSyntaxOnly": true,
+    "moduleResolution": "nodenext",
     "verbatimModuleSyntax": true,
     "noEmit": true,
     "strict": true,
@@ -11,7 +11,7 @@
     "outDir": "./dist",
     "rootDir": "./src",
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "NodeNext",
+    "module": "nodenext",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "allowImportingTsExtensions": false

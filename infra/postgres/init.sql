@@ -2,13 +2,6 @@
 \c price_monitor;
 
 -- ========================================
--- 1. EXTENSIONES
--- ========================================
-CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;
-CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
-CREATE EXTENSION IF NOT EXISTS uuid-ossp;
-
--- ========================================
 -- 2. FUNCIONES Y TRIGGERS
 -- ========================================
 
@@ -212,7 +205,7 @@ CREATE TABLE IF NOT EXISTS products (
     UNIQUE(user_id, url)
 );
 
--- Tabla: price_history (TimescaleDB)
+-- Tabla: price_history
 CREATE TABLE IF NOT EXISTS price_history (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     product_id UUID NOT NULL REFERENCES products(id) ON DELETE CASCADE,
@@ -408,39 +401,6 @@ CREATE TRIGGER check_price_alerts_trigger
     FOR EACH ROW
     WHEN (OLD.current_price IS DISTINCT FROM NEW.current_price)
     EXECUTE FUNCTION check_price_alerts();
-
--- ========================================
--- 6. CONFIGURACIÓN DE TIMESCALEDB
--- ========================================
-
--- Convertir price_history a hypertable
-SELECT create_hypertable(
-    'price_history', 
-    'scraped_at',
-    chunk_time_interval => INTERVAL '1 week',
-    if_not_exists => TRUE
-);
-
--- Configurar compresión
-ALTER TABLE price_history SET (
-    timescaledb.compress,
-    timescaledb.compress_segmentby = 'product_id',
-    timescaledb.compress_orderby = 'scraped_at DESC'
-);
-
--- Política de compresión (comprimir después de 30 días)
-SELECT add_compression_policy(
-    'price_history', 
-    INTERVAL '30 days',
-    if_not_exists => TRUE
-);
-
--- Política de retención (eliminar después de 1 año)
-SELECT add_retention_policy(
-    'price_history', 
-    INTERVAL '1 year',
-    if_not_exists => TRUE
-);
 
 -- ========================================
 -- 7. ÍNDICES PARA OPTIMIZACIÓN
