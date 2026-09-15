@@ -1,3 +1,4 @@
+import type { CreateUserInput } from "./users.types.ts";
 import * as userRepository from "./users.repository.ts";
 
 export async function getUserById(id: string) {
@@ -8,4 +9,18 @@ export async function getUserById(id: string) {
   }
 
   return user;
+}
+
+export async function getAllUsers() {
+  const users = await userRepository.findAllUsers();
+
+  if (!users) {
+    throw new Error("USERS_NOT_EXIST");
+  }
+
+  return users;
+}
+
+export async function createUser(data: CreateUserInput) {
+  return userRepository.CreateNewUser(data);
 }
